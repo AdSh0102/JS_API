@@ -63,6 +63,23 @@ function createMovieCard(movie) {
         showMovieDetails(movie.imdbID);
     });
 
+    // Add a click event listener to the movie card
+    card.addEventListener("click", function() {
+        showMovieDetails(movie.imdbID);
+    });
+
+    // Display the stored rating and comment (if available) in the movie card
+    var userRating = getUserRating(movie.imdbID);
+    var userComment = getUserComment(movie.imdbID);
+
+    var ratingAndComment = document.createElement("div");
+    ratingAndComment.classList.add("rating-comment");
+    ratingAndComment.innerHTML = `
+        <p>Rating: ${userRating || "N/A"}</p>
+        <p>Comment: ${userComment || "N/A"}</p>
+    `;
+
+    card.appendChild(ratingAndComment);
     return card;
 }
 
@@ -80,17 +97,93 @@ function fetchMovieDetails(imdbID) {
         });
 }
 
-// Function to display movie details in a modal or a separate section
+// Function to display movie details in a modal
 function showMovieDetails(imdbID) {
-    fetchMovieDetails(imdbID).then((movie) => {
-        alert(`
-            Title: ${movie.Title}
-            Year: ${movie.Year}
-            Genre: ${movie.Genre}
-            Director: ${movie.Director}
-            Plot: ${movie.Plot}
-        `);
-    });
+    fetchMovieDetails(imdbID)
+        .then(movie => {
+            // Create a form for rating and commenting
+            var form = document.createElement("form");
+            form.classList.add("rating-comment-form");
+
+            // Create a rating input
+            var ratingInput = document.createElement("input");
+            ratingInput.type = "number";
+            ratingInput.min = "1";
+            ratingInput.max = "5";
+            ratingInput.placeholder = "Enter your rating (1-5)";
+            form.appendChild(ratingInput);
+
+            // Create a comment input
+            var commentInput = document.createElement("textarea");
+            commentInput.placeholder = "Enter your comment";
+            form.appendChild(commentInput);
+
+            // Create a submit button
+            var submitButton = document.createElement("button");
+            submitButton.type = "button";
+            submitButton.textContent = "Submit";
+            submitButton.addEventListener("click", function() {
+                var rating = parseInt(ratingInput.value);
+                var comment = commentInput.value;
+                if (rating >= 1 && rating <= 5) {
+                    saveUserRating(imdbID, rating);
+                    saveUserComment(imdbID, comment);
+                    closeModal();
+                } else {
+                    alert("Please enter a valid rating between 1 and 5.");
+                }
+            });
+            form.appendChild(submitButton);
+
+            // Append the form to the movie details
+            var details = `
+                <h2>${movie.Title}</h2>
+                <p>Year: ${movie.Year}</p>
+                <p>Genre: ${movie.Genre}</p>
+                <p>Director: ${movie.Director}</p>
+                <p>Plot: ${movie.Plot}</p>
+            `;
+            var movieDetails = document.getElementById("movieDetails");
+            movieDetails.innerHTML = details;
+            movieDetails.appendChild(form);
+
+            // Show the modal
+            var modalContainer = document.getElementById("modalContainer");
+            modalContainer.style.display = "block";
+        });
+}
+
+// Function to close the modal
+function closeModal() {
+    var modalContainer = document.getElementById("modalContainer");
+    modalContainer.style.display = "none";
+}
+
+
+// Function to get user rating for a movie from local storage
+function getUserRating(imdbID) {
+    var ratingsData = JSON.parse(localStorage.getItem("movieRatings")) || {};
+    return ratingsData[imdbID] || null;
+}
+
+// Function to get user comment for a movie from local storage
+function getUserComment(imdbID) {
+    var commentsData = JSON.parse(localStorage.getItem("movieComments")) || {};
+    return commentsData[imdbID] || null;
+}
+
+// Function to save user rating for a movie to local storage
+function saveUserRating(imdbID, rating) {
+    var ratingsData = JSON.parse(localStorage.getItem("movieRatings")) || {};
+    ratingsData[imdbID] = rating;
+    localStorage.setItem("movieRatings", JSON.stringify(ratingsData));
+}
+
+// Function to save user comment for a movie to local storage
+function saveUserComment(imdbID, comment) {
+    var commentsData = JSON.parse(localStorage.getItem("movieComments")) || {};
+    commentsData[imdbID] = comment;
+    localStorage.setItem("movieComments", JSON.stringify(commentsData));
 }
 
 // Function to display movie cards for the current page
