@@ -1,4 +1,4 @@
-/* Style for the movie cards */
+
 #movieContainer {
     display: flex;
     flex-wrap: wrap;
@@ -10,7 +10,7 @@
 }
 
 .movie-card {
-    background: purple;
+    background: lightcoral;
     width: 200px;
     height: 300px; /* Add a fixed height for the movie card */
     margin-bottom: 20px;
@@ -39,27 +39,27 @@
     display: flex;
     justify-content: center;
     margin-top: 20px;
-    height: 200px;
-    width: 100%;
-    background: lightseagreen;
+    /* background: lightseagreen; */
 }
 
 .pagination-button {
     cursor: pointer;
-    border: 1px solid #ccc;
-    background-color: #f9f9f9;
-    padding: 5px 10px;
+    border: none;
+    background-color: #007BFF;
+    color: #fff;
+    padding: 8px 15px;
     margin: 0 5px;
-    border-radius: 3px;
+    border-radius: 5px;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
 }
 
 .pagination-button:hover {
-    background-color: #e0e0e0;
+    background-color: #0056b3;
 }
 
 .pagination-button.active {
-    background-color: #007bff;
-    color: #fff;
+    background-color: #0056b3;
 }
 
 /* Additional styles (optional) */
