@@ -1,0 +1,77 @@
+/* Style for the movie cards */
+#movieContainer {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    margin: 20px;
+    background: lightblue;
+    /* Add height to set a min-height for the container */
+    min-height: 500px; /* Adjust the height according to your preference */
+}
+
+.movie-card {
+    background: purple;
+    width: 200px;
+    height: 300px; /* Add a fixed height for the movie card */
+    margin-bottom: 20px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.poster {
+    width: 150px;
+    height: 220px;
+    object-fit: cover;
+    margin-bottom: 10px;
+    border-radius: 5px;
+}
+
+.title {
+    font-size: 16px;
+    font-weight: bold;
+}
+
+/* Style for the pagination buttons */
+#paginationButtons {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+    height: 200px;
+    width: 100%;
+    background: lightseagreen;
+}
+
+.pagination-button {
+    cursor: pointer;
+    border: 1px solid #ccc;
+    background-color: #f9f9f9;
+    padding: 5px 10px;
+    margin: 0 5px;
+    border-radius: 3px;
+}
+
+.pagination-button:hover {
+    background-color: #e0e0e0;
+}
+
+.pagination-button.active {
+    background-color: #007bff;
+    color: #fff;
+}
+
+/* Additional styles (optional) */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f5f5f5;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
